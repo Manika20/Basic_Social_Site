@@ -4,15 +4,16 @@ const app = express();
 const port = 8000;
 //to encode the string body
 app.use(express.urlencoded());
-// using the assets
-app.use(express.static('assets'));
-app.use(cookieParser());
 //layouts library
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
 // abstract styles and scripts from subpages to layouts.
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
+// using the assets
+app.use(express.static('assets'));
+app.use(cookieParser());
+
 //connection to database.
 const db = require('./config/mongoose')
 
