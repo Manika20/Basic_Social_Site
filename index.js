@@ -1,9 +1,12 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
+//to encode the string body
+app.use(express.urlencoded());
 // using the assets
 app.use(express.static('assets'));
-
+app.use(cookieParser());
 //layouts library
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
@@ -14,8 +17,7 @@ app.set('layout extractScripts',true);
 const db = require('./config/mongoose')
 
 
-//to encode the string body
-app.use(express.urlencoded());
+
 app.use('/',require('./routes'));
 app.set('view engine',"ejs");
 app.set('views','./views');
