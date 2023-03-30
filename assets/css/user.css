@@ -1,6 +1,5 @@
 body{
     background-color:lightblue;
-    text-decoration: underline;
-    text-align: center;
-    text-shadow: 0cap;
+    margin:0;
+    font-size: 2rem;
 }

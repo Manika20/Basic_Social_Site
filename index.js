@@ -2,34 +2,56 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
-//to encode the string body
-app.use(express.urlencoded());
-// using the assets
-app.use(express.static('assets'));
-app.use(cookieParser());
-//layouts library
 const expressLayouts = require('express-ejs-layouts');
+const db = require('./config/mongoose')
+const session = require('express-session');
+const passport= require('passport');
+const LocalStrategy = require('./config/passport-local-stratrgy');
+const MongoStore = require('connect-mongo');
+app.use(express.urlencoded());
+app.use(cookieParser());
+app.use(express.static('assets'));
 app.use(expressLayouts);
-// abstract styles and scripts from subpages to layouts.
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
-//connection to database.
-const db = require('./config/mongoose')
-
-
-
-app.use('/',require('./routes'));
 app.set('view engine',"ejs");
 app.set('views','./views');
 
-app.listen(port,function(err)
-{
-    if(err)
+
+
+
+app.use(session(
     {
-     
-        console.log(`Error in running the server!! ${err}`);
-        return;
+        name : 'major2',
+        secret: 'blahsomething',
+        saveUninitialized:false,
+        resave:false,
+        cookie:
+        {
+            maxAge:(1000*60*100)
+        },
+        store:  MongoStore.create(
+            {
+                //mongooseConnection:db,
+                mongoUrl:'mongodb://0.0.0.0:27017/contact_list_cookie',
+                autoRemove :'disabled'
+            },
+            function(err)
+            {
+                console.log(err||'connect-mongo-db-setup-ok');
+            }
+        )
+
     }
-    console.log(`Server is running on port ${port}`);
-    return ;
-})
+));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
+app.use('/',require('./routes'));
+app.listen(port, function(err){
+    if (err){
+        console.log(`Error in running the server: ${err}`);
+    }
+
+    console.log(`Server is running on port: ${port}`);
+});
