@@ -1,5 +1,6 @@
-body{
-    background-color:lightblue;
-    margin:0;
-    font-size: 2rem;
-}
+body {
+  background-color: lightblue;
+  margin: 0;
+  font-size: 2rem; }
+  body #layout-main {
+    height: 100%; }
