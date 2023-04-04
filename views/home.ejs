@@ -1,62 +1,40 @@
-<link rel="stylesheet" href="css/user.css">
-<h1>
-    Home Page!!
-</h1>
-<section id="feed-posts">
-    <h4>
-        Posts
-    </h4>
-    <%if(locals.user){%>
-    <form action="/post/create" id="new-post-form" method="POST">
-        <textarea name="content" cols="30" row="3" placeholder="Type-here!!"></textarea>
-       <p>
-        <input type="submit" value="Post">
-       </p>
-    </form>
-    <%}%>
 
-   <div id="post-list-conatiner">
-    <ul >
-        <%for(post of posts){%>
-            <p>
-                <li>
-                    <%=post.content%>
-                    <small>
-                        <%=post.user.name%>
-                    </small>
-                
-            </p>
-
-       <div class = "post-comments">
-        <%if(locals.user){%>    
-            <form action="/comments/create" method ="POST">
-                <input type="text" name="content" placeholder="Type here to add comment......">
-                <input type="hidden" name="post" value ="<%=post._id%>">
-                <input type="submit" value="Add Comment">
-
-            </form>
-            <%}%>
-       </div>
-       <div class="post-comment-list">
-        <ul id="post-comments-<%=post._id%>">
-           <% for(comment of post.comments){%>
-            <li>
-                <p>
-                    <%=comment.content%>
-                <br>
-                      <small>
-                   <%=comment.user.name%>
-
-                        </small>    
-                                </p>
-            </li>
-            <%}%>
+<link rel="stylesheet" href="css/home.css">
+<div id="home-container">
+    <section id="feed-posts">
+        <h4>
+            Posts
+        </h4>
+        <%if(locals.user){%>
+        <form action="/post/create" id="new-post-form" method="POST">
+            <textarea name="content" cols="30" row="3" placeholder="Type-here!!"></textarea>
+           <p>
+            <input type="submit" value="Post">
+           </p>
+        </form>
+        <%}%>
+    
+       <div id="post-list-conatiner">
+        <ul >
+            <%for(post of posts){%>
+              
+                  
+              <%-include('_post');%>    
+        <%}%>
         </ul>
-
-       </div>
-    </li>
+    </div>
+    </section>
+    </section id="user-friends">
+    <h4>Friends</h4>
+    <%for(u of all_users){%>
+        <p>
+            
+            <a href="/users/profile/<%=u._id%>" style="display: inline-block;"><%=u.name%></a>
+            <br>
+        </p>
     <%}%>
-    </ul>
+    
+    </section>
+            
 </div>
-</section>
-        
+<script src="/js/home_post.js"></script>

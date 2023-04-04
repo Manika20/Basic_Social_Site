@@ -1,10 +1,35 @@
 const User = require('../model/user');
 module.exports.profile = function(req,res)
 {
-    
-    res.render('user',{
-        title:"User | Profile"
+    console.log(req.params.id);
+    User.findById(req.params.id,function(err,user)
+    {
+        if(user)
+      {
+        console.log(user.name);
+        return res.render('user',{
+            title:"User | Profile",
+            profile_user: user
+        })
+      }
+      else{
+        res.redirect('back');
+      }
     })
+   
+}
+module.exports.update = function(req,res)
+{
+    if(req.params.id==req.user.id)
+    {
+        User.findByIdAndUpdate(req.params.id,req.body,function(err,user)
+        {
+            return res.redirect('back');
+        })
+    }
+    else{
+        return res.status(400).send(Unauthorize);
+    }
 }
 module.exports.signIn= function(req,res)
 {
@@ -32,43 +57,34 @@ if(req.isAuthenticated())
 
 }
 
-module.exports.create = function(req,res)
+module.exports.create = async function(req,res)
 {
-    
-    console.log(req.body.password);
-    console.log(req.body.confirm_password);
-    if(req.body.password != req.body.confirm_password)
+    try
     {
-        return res.redirect('back');
+        if(req.body.password != req.body.confirm_password)
+        {
+          return res.redirect('back');
+        }
+ let user = await User.findOne({email:req.body.email})
+       if(!user)
+       {
+         await User.create(req.body);
+         return res.redirect('/users/sign-in');
+       }
+       else
+       {
+         return res.redirect('back');
+       }
+    }catch(err)
+    {
+        console.log("Error",err);
     }
-    User.findOne({email:req.body.email},function(err,user)
-    {
-          if(err)
-          {
-            console.log("error in searching!!")
-            return;
-          }
-          if(!user)
-          {
-            User.create(req.body,function(err,user)
-            {
-                if(err)
-                {
-                    console.log("error in creating user");
-                    return;
-                }
-   return res.redirect('/users/sign-in');
-            })
-          }
-          else
-          {
-            return res.redirect('back');
-          }
-    })
+   
 }
 
 module.exports.createSession=function(req,res)
 {
+   req.flash('success','Logged in Sucessfully!!');
    return res.redirect('/');
 }
 module.exports.destroySession = function(req,res)
@@ -79,6 +95,8 @@ module.exports.destroySession = function(req,res)
         {
             return next(err);
         }
+        
     });
+    req.flash('success','Logged out Sucessfully!!');
     res.redirect('/');
 }

@@ -9,6 +9,8 @@ const passport= require('passport');
 const LocalStrategy = require('./config/passport-local-stratrgy');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
 app.use(sassMiddleware(
     {
         src:"./assets/scss",
@@ -18,6 +20,7 @@ app.use(sassMiddleware(
         prefix:'/css'
     }
 ))
+
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(express.static('assets'));
@@ -26,9 +29,6 @@ app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 app.set('view engine',"ejs");
 app.set('views','./views');
-
-
-
 
 app.use(session(
     {
@@ -54,9 +54,12 @@ app.use(session(
 
     }
 ));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setFlash);
 app.use('/',require('./routes'));
 app.listen(port, function(err){
 

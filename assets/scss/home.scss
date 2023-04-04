@@ -1,0 +1,17 @@
+#home-container
+{   
+    display:flex;
+    font-size: 1.7rem;
+   
+    #feed-posts
+    {
+        width:60%;
+        padding: 2%;
+    }
+    #user-friends
+    {
+        width:30%;
+        
+    }
+
+}
