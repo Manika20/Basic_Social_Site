@@ -29,13 +29,16 @@ class PostComments
                 e.preventDefault();
                 console.log("manika");
                 let self = this;
+                console.log("manika");
                 $.ajax(
                     {
+                        
                     url:'/comments/create',
                     type:'POST',
                     data:$(self).serialize(),
                     success: function(data)
                     {
+                        console.log("manika");
                         let newComment = pself.newCommentDom(data.data.comment);
                         $(`#post-comments-${postId}`).prepend(newComment);
                         pself.deleteComment($(' .delete-comment-button', newComment));
