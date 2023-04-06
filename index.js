@@ -61,6 +61,7 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMware.setFlash);
 app.use('/',require('./routes'));
+
 app.listen(port, function(err){
 
     if (err)

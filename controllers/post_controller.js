@@ -9,7 +9,7 @@ module.exports.create = async function(req,res)
   })
   if(req.xhr)
   {
-   console.log("00");
+   //console.log("00");
    return res.status(200).json(
       {
          data:
@@ -40,7 +40,20 @@ module.exports.destroy= async function(req,res)
       {
          post.remove();
          await Comment.deleteMany({post:req.param.id})
-         req.flash('success','Post deleted');
+         if(req.xhr)
+         {
+          console.log('00');
+          return res.status(200).json(
+             {
+                data:
+                {
+                   post_id :req.params.id
+                },
+                message:"deleted!!"
+             })
+          }
+       
+         //req.flash('success','Post deleted');
          return res.redirect('back');
       }
       else
@@ -48,7 +61,7 @@ module.exports.destroy= async function(req,res)
          req.flash('error','You are not authorize to delete this post');
          return res.redirect('back');
       }
-
+     
    }catch(err)
    {
       req.flash('error',err);
