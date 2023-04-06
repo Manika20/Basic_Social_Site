@@ -27,9 +27,8 @@ class PostComments
             this.newCommentForm.submit(function(e)
             {
                 e.preventDefault();
-                console.log("manika");
+                
                 let self = this;
-                console.log("manika");
                 $.ajax(
                     {
                         
@@ -42,6 +41,14 @@ class PostComments
                         let newComment = pself.newCommentDom(data.data.comment);
                         $(`#post-comments-${postId}`).prepend(newComment);
                         pself.deleteComment($(' .delete-comment-button', newComment));
+                        new Noty({
+                            theme: 'relax',
+                            text: "Comment published!",
+                            type: 'success',
+                            layout: 'topRight',
+                            timeout: 1500
+                            
+                        }).show();
                     },
                     error : function(err)
                     {
@@ -76,6 +83,14 @@ return $(`<li id="comment-${ comment._id }">
                     url: $(deleteLink).prop('href'),
                     success: function(data){
                         $(`#comment-${data.data.comment_id}`).remove();
+                        new Noty({
+                            theme: 'relax',
+                            text: "Comment Deleted!",
+                            type: 'error',
+                            layout: 'topRight',
+                            timeout: 1500
+                            
+                        }).show();
     
                         
                     },error: function(error){

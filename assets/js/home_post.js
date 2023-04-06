@@ -7,7 +7,7 @@
         newPostform.submit(function(e)
         {
             e.preventDefault();
-            console.log("manikap");
+            
             $.ajax(
                 {   url: '/post/create',
                     type:'POST',
@@ -20,7 +20,15 @@
                        //initializing class for every post created.
                         // call the create comment class
                        const obj = new PostComments(data.data.post._id);
-                        console.log(obj);
+                       new Noty({
+                        theme: 'relax',
+                        text: "Post Published!",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                        
+                    }).show();
+                        
                        
                     }, 
                     error:function(err)
@@ -76,6 +84,14 @@ let deletePost =function(deletelink)
                 success: function(data)
                 {
                          $(`#post-${data.data.post_id}`).remove();
+                         new Noty({
+                            theme: 'relax',
+                            text: "Post  Deleted!",
+                            type: 'error',
+                            layout: 'topRight',
+                            timeout: 1500
+                            
+                        }).show();
                          
 
                 },
@@ -91,7 +107,6 @@ let deletePost =function(deletelink)
 }
 let convertPostsToAjax = function(){
    
-    //console.log($('.allposts'));
     $('.allposts').each(function(){
         
         let self = $(this);
@@ -103,14 +118,8 @@ let convertPostsToAjax = function(){
         let postId = self.prop('id').split("-")[1]
         //console.log(postId) 
         const onj= new PostComments(postId);
-        console.log(onj);
-       
-       
     });
 }
-
-
-
 createPost();
 convertPostsToAjax();
 //createPost();
