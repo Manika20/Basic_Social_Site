@@ -24,14 +24,17 @@
         </ul>
     </div>
     </section>
-    </section id="user-friends">
+    <section id="user-friends">
     <h4>Friends</h4>
     <%for(u of all_users){%>
-        <p>
-            
-            <a href="/users/profile/<%=u._id%>" style="display: inline-block;"><%=u.name%></a>
-            <br>
-        </p>
+    <p> 
+    <a href="/users/profile/<%=u._id%>" >
+        <%=u.name%>
+    </a>
+   </p>  
+    
+           
+        
     <%}%>
     
     </section>

@@ -8,9 +8,8 @@
         </small>
             <%}%>
     <%=post.content%>
-    <small>
+    
         <%=post.user.name%>
-    </small>
 
 </p>
 
@@ -25,6 +24,7 @@
 <%}%>
 </div>
 <div class="post-comments-list">
+   <h6>Comments</h6> 
 <ul id="post-comments-<%=post._id%>">
 <% for(comment of post.comments){%>
 <%- include('_comment')-%>
