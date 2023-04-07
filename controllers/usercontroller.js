@@ -1,12 +1,14 @@
 const User = require('../model/user');
+const fs = require('fs');
+const path = require('path');
 module.exports.profile = function(req,res)
 {
-    console.log(req.params.id);
+    
     User.findById(req.params.id,function(err,user)
     {
         if(user)
       {
-        console.log(user.name);
+        
         return res.render('user',{
             title:"User | Profile",
             profile_user: user
@@ -18,18 +20,53 @@ module.exports.profile = function(req,res)
     })
    
 }
-module.exports.update = function(req,res)
+module.exports.update = async function(req,res)
 {
-    if(req.params.id==req.user.id)
-    {
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user)
-        {
+   
+   if(req.params.id==req.user.id)
+   {   
+           try
+           { 
+            //console.log('***multe');
+               let user = await  User.findById(req.params.id);
+               //multer is used to read the file as now we have two methods.
+               User.uploadedAvatar(req,res,function(err)
+               {
+                if(err)
+                {
+                    console.log('multer error',err);
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file)
+                {   
+                    
+                    if(user.avatar && fs.existsSync(user.avatar))
+                    {
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar))
+                    }
+                    //this is saving the path of the uploaded file into the 
+                    // avatar filed of user.
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+               })
+
+               
+           }catch(err)
+           {
+            req.flash('error',err);
             return res.redirect('back');
-        })
-    }
-    else{
-        return res.status(400).send(Unauthorize);
-    }
+           }
+   }
+    
+   else
+   {
+    req.flash('error','Unauthorized');
+    return res.status(401).send(Unauthorize);
+   }
 }
 module.exports.signIn= function(req,res)
 {
