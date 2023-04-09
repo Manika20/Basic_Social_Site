@@ -18,10 +18,14 @@ function(req,email,password,done)
             req.flash('error',err);
             return done(err);
         }
-   if(!user || user.password !=password)
+   if(!user )
    {
-       req.flash('error','Invalid Username/Password');
+       //req.flash('error','Invalid Username/Password');
     return done(null,false);
+   }
+   if(user.password !=password)
+   {
+      return res.redirect('/users/sign-up');
    }
    return done(null,user);
     });

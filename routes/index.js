@@ -4,6 +4,7 @@ const homeController = require("../controllers/homecontroller");
 router.get('/',homeController.home) 
 router.use('/users',require('./users'));
 router.use('/post',require('./post'));
+router.use('/auth',require('./auth'));
 router.use('/comments',require('./comments'));
 router.use('/api',require('./api'));
 console.log("router loaded")
