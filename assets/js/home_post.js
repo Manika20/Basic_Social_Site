@@ -4,6 +4,7 @@
     let createPost = function()
     {
         let newPostform = $('#new-post-form');
+        console.log( newPostform);
         newPostform.submit(function(e)
         {
             e.preventDefault();
@@ -17,9 +18,11 @@
                        let newPost = newPostDom(data.data.post);
                        $('#posts-list-conatiner>ul').prepend(newPost);
                        deletePost($('.delete-post-button', newPost));
+                       //likePost($('.likes',newPost));
                        //initializing class for every post created.
                         // call the create comment class
                        const obj = new PostComments(data.data.post._id);
+                       new ToggleLike($(' .likes', newPost));
                        new Noty({
                         theme: 'relax',
                         text: "Post Published!",
@@ -49,8 +52,14 @@
         
         <small>
             <a class ="delete-post-button" href="/post/destroy/${post._id}">
-              DELETE
+              x
             </a>
+            <br>
+            <a href="/like/toggle?id=${post._id}&type=Post" class="likes" data-likes="0">
+                0 Like
+            </a>
+          
+            
         </small>
             
     ${post.content}
@@ -105,19 +114,27 @@ let deletePost =function(deletelink)
     
 
 }
+
 let convertPostsToAjax = function(){
    
     $('.allposts').each(function(){
         
         let self = $(this);
         let deleteButton = $(' .delete-post-button', self);
-      
+        //let likeButton = $('.likes',self);
+        //console.log(likeButton);
         deletePost(deleteButton);
+        //likePost(likeButton);
        
         // get the post's id by splitting the id attribute
         let postId = self.prop('id').split("-")[1]
         //console.log(postId) 
         const onj= new PostComments(postId);
+        //console.log(onj);
+      
+        new ToggleLike($(' .likes', self));
+        new ToggleLike($(' .comment-likes', self));
+
     });
 }
 createPost();

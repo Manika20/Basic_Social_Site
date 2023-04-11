@@ -7,6 +7,7 @@ router.use('/post',require('./post'));
 router.use('/auth',require('./auth'));
 router.use('/comments',require('./comments'));
 router.use('/api',require('./api'));
+router.use('/like',require('./like'));
 console.log("router loaded")
 
 module.exports = router;

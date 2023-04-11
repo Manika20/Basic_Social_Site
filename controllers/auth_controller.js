@@ -68,7 +68,7 @@ module.exports.find = async function(req,res)
             if(req.body.password === req.body.confirm_password){
                 console.log('Password  matchedd' )
                 let user = await User.findById(AccessToken.user);
-                console.log(user);
+                
                 if(user){
                     console.log('User found' , user )
                     user.password = req.body.password;

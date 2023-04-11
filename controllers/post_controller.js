@@ -7,6 +7,7 @@ module.exports.create = async function(req,res)
          content:req.body.content,
          user:req.user._id
   })
+  let post_ = await post.populate(['user , likes']);
   if(req.xhr)
   {
    //console.log("00");
@@ -14,7 +15,7 @@ module.exports.create = async function(req,res)
       {
          data:
          {
-            post:post
+            post:post_
          },
          message:"Post Created!!"
       }

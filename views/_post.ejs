@@ -5,6 +5,12 @@
             <a class ="delete-post-button" href="/post/destroy/<%=post._id%>">
               x
             </a>
+            <br>
+            
+            <a href="/like/toggle?id=<%=post._id%>&type=Post" class="likes" data-likes="<%= post.likes.length %>">
+                <%= post.likes.length %> Like 
+            </a>
+         
         </small>
             <%}%>
     <%=post.content%>
