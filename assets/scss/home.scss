@@ -4,21 +4,27 @@ body
     #home-container
     {
     display:flex;
-    font-size: 1.7rem;
+    font-size: 1.2rem;
     
     margin:1%;
     #feed-posts
     {
-        width:60%;
+        width:35%;
         padding: 2%;
+        border:2px solid black;
        
     }
     #user-friends
     {
-        width:30%;
+        width:25%;
         padding: 2%;
-      
-        
+        border:2px solid black;
+    }
+    #users
+    {
+        width:25%;
+        padding: 2%;
+        border:2px solid black;
     }
    
     

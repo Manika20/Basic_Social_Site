@@ -9,26 +9,25 @@ module.exports.toggleLike = async function(req,res)
     let deleted = false;
     let type;
     
-    console.log(req.query.type);
-    console.log(req.query.id);
+    
    if(req.query.type=='Post')
    {
-     console.log("Yes Post");
+     //console.log("Yes Post");
       likeable = await Post.findById(req.query.id).populate("likes");
-      console.log(likeable);
+      //console.log(likeable);
       type='Post';
    }
    else{
     likeable = await Comment.findById(req.query.id).populate("likes");
     type= 'Comment';
    }
-  console.log('out');
+  //console.log('out');
    let existingLike = await Like.findOne({
     user:req.user,            // is user ka
     onModel:req.query.type,  //is type ka
     likeable:req.query.id  //is id pai
    })
-   console.log(existingLike);
+   //console.log(existingLike);
    if(existingLike)
    {
     deleted=true;
@@ -55,6 +54,10 @@ module.exports.toggleLike = async function(req,res)
             onModel:req.query.type
         }
     )
+    //console.log(newLike);
+    likeable.likes.push(newLike._id);
+    likeable.save();
+    deleted = false;
     if(req.xhr)
     {
        return res.json(200,{
@@ -65,10 +68,7 @@ module.exports.toggleLike = async function(req,res)
            like : newLike
        })
     }
-    console.log(newLike);
-    likeable.likes.push(newLike);
-    likeable.save();
-    deleted = false;
+   
   }
  
  return res.redirect('back');

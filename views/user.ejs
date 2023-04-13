@@ -18,5 +18,12 @@
         <p>
             Email:<%=profile_user.email%>
         </p>
-    <%}%>
-
+      
+        <%if(friend=="true"){%>
+        
+      <a href="/users/add-friend?id=<%=profile_user.id%>" id="friend">Remove Friend</a>
+        <%}else{%>
+           <a href="/users/add-friend?id=<%=profile_user.id%>" id="friend">Add Friend</a>
+        <%}%>
+        <%}%>
+        <script src ="/js/friend.js"></script>

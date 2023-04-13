@@ -2,11 +2,17 @@ body {
   margin: 0; }
   body #home-container {
     display: flex;
-    font-size: 1.7rem;
+    font-size: 1.2rem;
     margin: 1%; }
     body #home-container #feed-posts {
-      width: 60%;
-      padding: 2%; }
+      width: 35%;
+      padding: 2%;
+      border: 2px solid black; }
     body #home-container #user-friends {
-      width: 30%;
-      padding: 2%; }
+      width: 25%;
+      padding: 2%;
+      border: 2px solid black; }
+    body #home-container #users {
+      width: 25%;
+      padding: 2%;
+      border: 2px solid black; }

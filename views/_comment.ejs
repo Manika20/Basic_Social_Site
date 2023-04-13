@@ -4,9 +4,17 @@
             <a  class="delete-comment-button" href="/comments/destroy/<%=comment._id%>">
               X
             </a>
+            
         </small>
             <%}%>
-   
+            <%if(locals.user){%>
+            <a href="/like/toggle?id=<%=comment._id%>&type=Comment" class="comment-likes" data-likes="<%= post.likes.length %>">
+                <%= comment.likes.length %> Like 
+            </a>
+        <%}else{%> 
+           
+        <%= comment.likes.length %> Like 
+        <%}%>     
         <%=comment.content%>
    
        <%=comment.user.name%>  

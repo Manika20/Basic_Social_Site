@@ -1,5 +1,6 @@
 const Comment = require('../model/comment');
 const Post = require('../model/post');
+const Like = require('../model/like');
 const commentsMailer = require('../mailers/comments_mailer');
 const commentEmailWorker = require('../workers/comment_email_worker');
 var kue = require('kue')
@@ -62,6 +63,7 @@ module.exports.destroy = function(req,res)
     {
         if(req.user.id== comment.user)
         {
+            Like.deleteMany({likeable:comment._id,onModel:'Comment'});
             const postId = comment.post;
             comment.remove();
             Post.findByIdAndUpdate(postId,{$pull:{comment:req.params.id}},function(err,post)

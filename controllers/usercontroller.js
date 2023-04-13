@@ -1,24 +1,48 @@
 const User = require('../model/user');
 const fs = require('fs');
 const path = require('path');
-module.exports.profile = function(req,res)
-{
-    
-    User.findById(req.params.id,function(err,user)
-    {
+const Friend = require('../model/friends');
+module.exports.profile = async function(req,res)
+{ 
+    try{
+        let user = await User.findById(req.params.id)
+        console.log(req.user.id);
+        console.log(req.params.id);
+        let friends = await User.findById(req.user).populate('friends')
+        //console.log("*******************",friends);
+        let existfr = await Friend.findOne({to_user:req.params.id,from_user:req.user.id})
+       console.log("*********",existfr);
+       let friend;
+       if(existfr)
+       {
+          friend= "true";
+       }
+       else{
+        friend="false";
+       }
+console.log(friend);
         if(user)
       {
         
         return res.render('user',{
             title:"User | Profile",
-            profile_user: user
+            profile_user: user,
+            friends,
+            friend
         })
-      }
+    }
       else{
         res.redirect('back');
       }
-    })
+
+    }catch(err)
+    {
+        console.log("Error occured",err);
+    }
+    
    
+    
+
 }
 module.exports.update = async function(req,res)
 {
