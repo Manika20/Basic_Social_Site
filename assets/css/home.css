@@ -6,13 +6,10 @@ body {
     margin: 1%; }
     body #home-container #feed-posts {
       width: 35%;
-      padding: 2%;
-      border: 2px solid black; }
+      padding: 2%; }
     body #home-container #user-friends {
       width: 25%;
-      padding: 2%;
-      border: 2px solid black; }
+      padding: 2%; }
     body #home-container #users {
       width: 25%;
-      padding: 2%;
-      border: 2px solid black; }
+      padding: 2%; }

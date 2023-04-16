@@ -11,6 +11,7 @@ module.exports.friendship = async function(req,res)
        
         if(existingFriend)  
         {
+            console.log("already a friend");
            fromUser.friends.pull(existingFriend._id);
            fromUser.save();
            existingFriend.remove();
@@ -18,12 +19,14 @@ module.exports.friendship = async function(req,res)
            removeFriend = true;    
         }
         else{
+            console.log("already a friend");
           let friendship = await Friend.create({
             from_user:req.user.id,
             to_user: req.query.id  
            })
            fromUser.friends.push(friendship);
            fromUser.save();
+           deleted:false;
         }
         if(req.xhr){
            return res.status(200).json({
