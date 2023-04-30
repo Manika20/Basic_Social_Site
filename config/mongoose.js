@@ -1,7 +1,8 @@
 //require the library
 const mongoose = require('mongoose');
+const env = require('../config/environment');
 // set connection
-mongoose.connect('mongodb://127.0.0.1:27017/contacts_list_db');
+mongoose.connect(`mongodb://127.0.0.1:27017/${env.db}`);
 //mongoose.connect('mongodb://localhost/contacts_list_db');
 //acquire the connection
 const db = mongoose.connection;

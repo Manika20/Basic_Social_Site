@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="<%=assetPath('css/home.css')%>">
 <div id="home-container">
     <section id="feed-posts">
         <h4>
@@ -50,6 +50,15 @@
     </section>
             
 </div>
-<script src ="/js/like_post.js"></script>
-<script src ="/js/home_comments.js"></script>
-<script src="/js/home_post.js"></script>
+<%-include('chatbox');%>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+<script src ="<%=assetPath('js/like_post.js')%>"></script>
+<script src ="<%=assetPath('js/home_comments.js')%>"></script>
+<script src ="<%=assetPath('js/chat_engine.js')%>"></script>
+<script src="<%=assetPath('js/home_post.js')%>"></script>
+<%if(locals.user){%>
+    <script>
+   let obj = new chatEngine('user-chat-box','<%=locals.user.email%>')
+   console.log(obj);
+    </script>
+<%}%>

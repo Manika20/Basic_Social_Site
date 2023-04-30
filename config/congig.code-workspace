@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../../dsalove"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [
+			""
+		],
+		"files.associations": {
+			"climits": "cpp",
+			"ostream": "cpp"
+		}
+	}
+}
